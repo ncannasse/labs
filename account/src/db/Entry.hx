@@ -114,6 +114,28 @@ class EntryManager extends sys.db.Manager<Entry> {
 		});
 	}
 
+	public function allYears() : List<Int> {
+		return execute("SELECT DISTINCT(LEFT(date,4)) as year FROM Entry ORDER by year DESC").results().map(function(r) return r.year);
+	}
+	
+	public function statsPerYear() {
+		return allYears().map(function(y) {
+			var results = execute("SELECT gid, hasSubEntries, SUM(amount) as amount FROM Entry LEFT JOIN `Group` ON gid = Group.id WHERE LEFT(date,4) = "+y+" GROUP BY gid").results();
+			var h = new IntHash<Float>();
+			for( r in results ) {
+				var amount : Float = r.amount;
+				if( r.hasSubEntries )
+					amount -= execute("SELECT SUM(amount) FROM Entry WHERE pid IN (SELECT id FROM Entry WHERE LEFT(date,4) = "+y+")").getFloatResult(0);
+				h.set(r.gid,round(amount));
+			}
+			return {
+				month : ""+y,
+				datas : h,
+			};
+		});
+	}
+	
+
 	public function selectPossibleParents() {
 		return unsafeObjects("SELECT Entry.* FROM Entry, `Group` WHERE gid = Group.id AND Group.hasSubEntries AND (SELECT COUNT(*) FROM Entry AS E2 WHERE E2.pid = Entry.id) = 0 ORDER BY date DESC",false);
 	}

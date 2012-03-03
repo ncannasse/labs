@@ -5,14 +5,14 @@
 		<th>::if perYear::<a href="/stats">Année</a>::else::<a href="/stats?perYear=1">Mois</a>::end::</th>
 		::foreach g groups::
 		<th>
-			<a href="/?group=::g.id::" class="hide">::g.name::</a>
+			<a href="/?group=::g.id::::if currentYear::;date=::currentYear::::end::" class="hide">::g.name::</a>
 		</th>
 		::end::
 	</tr>
 	::foreach s stats::
 	<tr ::attr class if( repeat.s.odd ) "odd"::>
 		<th>
-			<a href="/?date=::s.month::" class="hide">::s.month::</a>
+			<a href="::if perYear::/stats?year=::s.month::::else::/?date=::s.month::::end::" class="hide">::s.month::</a>
 		</th>
 		::foreach g groups::
 			<td>

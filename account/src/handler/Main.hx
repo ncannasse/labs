@@ -53,8 +53,13 @@ class Main extends mtwin.web.Handler<Void> {
 		var cond = request.exists("year") ? { year : request.getInt("year"), maxMonth : null } : null;
 		if( cond != null && cond.year == Date.now().getFullYear() )
 			cond.maxMonth = Date.now().getMonth();
-		App.context.groups = groups.filter(function(g) return db.Entry.manager.totalAmount(cond,g.id) != 0);
-		App.context.stats = db.Entry.manager.stats(cond);
+		App.context.groups = groups.filter(function(g) return db.Entry.manager.totalAmount(cond, g.id) != 0);
+		var perYear = cond == null && request.exists("perYear");
+		if( perYear )
+			App.context.perYear = true;
+		if( cond != null )
+			App.context.currentYear = cond.year;
+		App.context.stats = if( perYear ) db.Entry.manager.statsPerYear() else db.Entry.manager.stats(cond);
 		App.context.totalAmount = callback(db.Entry.manager.totalAmount,cond);
 	}
 
