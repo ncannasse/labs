@@ -1,0 +1,56 @@
+::use 'design.mtt'::
+
+<table class="small">
+	<tr>
+		<th>::if perYear::<a href="/stats">Année</a>::else::<a href="/stats?perYear=1">Mois</a>::end::</th>
+		::foreach g groups::
+		<th>
+			<a href="/?group=::g.id::" class="hide">::g.name::</a>
+		</th>
+		::end::
+	</tr>
+	::foreach s stats::
+	<tr ::attr class if( repeat.s.odd ) "odd"::>
+		<th>
+			<a href="/?date=::s.month::" class="hide">::s.month::</a>
+		</th>
+		::foreach g groups::
+			<td>
+				<a href="/?group=::g.id::;date=::s.month::" class="hide">::api.ifnull(s.datas.get(g.id),0)::</a>
+			</td>
+		::end::
+	</tr>
+	::end::
+	<tr>
+		<th>Total</th>
+		::set total = 0::
+		::foreach g groups::
+			<td>
+				::set gtot = totalAmount(g.id)::
+				::set total = total + if( gtot > 0 ) gtot else 0::
+				<b>::gtot::</b>
+			</td>
+		::end::
+	</tr>
+	<tr>
+		<th>Moy.</th>
+		::foreach g groups::
+			<td><b>::api.round(totalAmount(g.id)/stats.length)::</b></td>
+		::end::
+	</tr>
+	<tr>
+		<th>Revenus %</th>
+		::foreach g groups::
+			<td>
+				::set gtot = totalAmount(g.id)::
+				::if gtot > 0::
+					--
+				::else::
+					<b>::api.round(-gtot*1000/total)/10::%</b>
+				::end::
+			</td>
+		::end::
+	</tr>
+</table>
+
+::end::

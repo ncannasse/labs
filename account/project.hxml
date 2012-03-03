@@ -1,0 +1,10 @@
+-cp src
+-neko www/index.n
+-main App
+-lib templo
+-lib hxpdf
+-D spod_macro
+--next
+-cp src
+js.App
+-js www/js/app.js

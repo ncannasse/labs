@@ -1,0 +1,70 @@
+::use 'design.mtt'::
+
+	::if waiting > 0::
+	<p>
+		::waiting:: entrées en attente de validation <a href="/?group=null">[lister]</a>
+	</p>
+	::end::
+
+	<table class="table">
+		<tr>
+			<th>Date</th>
+			<th width="350px">Titre</th>
+			<th>Valeur</th>
+			<th>Custom</th>
+			<th>Group</th>
+			<th>Act</th>
+		</tr>
+	::foreach e entries::
+		<tr ::attr class if( repeat.e.odd ) "odd"::>
+			<td>::api.date(e.date)::</td>
+			<td class="small">
+				::if e.hasSubEntry()::
+					<a href="/?parent=::e.id::">::e.title::::if e.comment != "":: (::e.comment::)::end::</a>
+				::else::
+					::e.title::::if e.comment != "":: (::e.comment::)::end::
+				::end::
+			</td>
+			<td><span $$tip(::e.accountValue():: €)>::e.amount:: €</span></td>
+			<td>
+				<form action="/update?id=::e.id::" method="POST">
+					<input class="input hidden" name="custom" onfocus="this.className = 'input'" onblur="this.className = 'input hidden'" value="::e.custom::" onchange="this.form.submit()"/>
+				</form>
+			</td>
+			<td>
+				<form action="/update?id=::e.id::" method="POST">
+					<select name="group" onchange="this.form.submit()" ::attr class if( e.gid == null ) "input important" else "input hidden"::>
+						<option value="0">--- Choisir ---</option>
+						::foreach g groups::
+							<option value="::g.id::" ::attr selected (e.gid == g.id)::>::g.name::</option>
+						::end::
+					</select>
+				</form>
+			</td>
+			<td>
+				<a href="/db/Entry/edit/::e.id::">[E]</a>
+			</td>
+		</tr>
+	::end::
+		::if parent != null::
+		<tr>
+			<th colspan="2">Total</th>
+			<td colspan="4">
+				::set total = 0::
+				::foreach e entries::
+					::set total = total + e.amount::
+				::end::
+				<b>::total:: €</b>
+			</td>
+		</tr>
+		::end::
+	</table>
+
+	::if page > 0::
+		<a href="::url::page=::(page-1)::">&lt;&lt; Précédent</a>
+	::else::
+		&lt;&lt; Précédent
+	::end::
+	| <a href="::url::page=::(page+1)::">Suivant &gt;&gt;</a>
+
+::end::

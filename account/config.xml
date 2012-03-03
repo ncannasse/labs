@@ -1,0 +1,5 @@
+<config
+	db="mysql://root:@127.0.0.1:3306/comptes"
+	debug="1"
+	cache="0"
+/>

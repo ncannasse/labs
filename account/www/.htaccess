@@ -1,0 +1,11 @@
+<FilesMatch "^([_a-z0-9A-Z-])+$">
+	RewriteEngine On
+	RewriteRule (.*) /index.n
+</FilesMatch>
+
+<FilesMatch "(__admin|__db)">
+	AuthUserFile /data/.htpasswd/all
+	AuthName "Motion Twin (identifiants personnels)"
+	AuthType Basic
+	Require valid-user
+</FilesMatch>
