@@ -23,6 +23,7 @@
 			<li><a href="/stats">Stats</a></li>
 			<li><a href="/auto" $$confirm()>Automatic</a></li>
 			<li><a href="/upload">Upload</a></li>
+			<li><a href="/notes">Notes</a></li>
 			<li><a href="/db">Database</a></li>
 			<li ::cond entries::><form method="GET" action="/"><input name="search" value="::request.get('search','')::"/></form></li>
 		</ul>

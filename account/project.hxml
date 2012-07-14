@@ -3,6 +3,7 @@
 -main App
 -lib templo
 -lib hxpdf
+-lib mtwin
 -D spod_macro
 --next
 -cp src

@@ -1,0 +1,18 @@
+::use 'design.mtt'::
+
+<ul>
+	<li ::repeat n notes::><a href="/notes?id=::n.id::">::n.title::</a></li>
+</ul>
+
+<form action="/notes">
+	<input name="name"/> <input type="submit" value="Créer"/>
+</form>
+
+<div class="note" ::cond note::>
+	<h1>::note.title::</h1>
+	<form action="/notes?id=::note.id::" method="POST">
+		<textarea name="content" onchange="this.form.submit()">::note.content::</textarea>
+	</form>
+</div>
+
+::end::

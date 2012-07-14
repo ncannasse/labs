@@ -23,7 +23,7 @@
     <option flashStrict="False" />
     <option mainClass="App" />
     <option enabledebug="False" />
-    <option additional="-lib templo&#xA;-lib hxpdf&#xA;-D spod_macro&#xA;&#xA;--next&#xA;-cp src&#xA;js.App&#xA;-js www/js/app.js" />
+    <option additional="-lib templo&#xA;-lib hxpdf&#xA;-lib mtwin&#xA;-D spod_macro&#xA;&#xA;--next&#xA;-cp src&#xA;js.App&#xA;-js www/js/app.js" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

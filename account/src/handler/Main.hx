@@ -14,6 +14,7 @@ class Main extends mtwin.web.Handler<Void> {
 		free("auto", doAuto );
 		free("update", doUpdate );
 		free("stats", "stats.mtt", doStats );
+		free("notes", "notes.mtt", doNotes );
 	}
 
 	function doMain() {
@@ -242,6 +243,28 @@ class Main extends mtwin.web.Handler<Void> {
 			list.add({ date : date, title : title, comment : "", amount : amount });
 		}
 		return list;
+	}
+	
+	function doNotes() {
+		App.context.notes = db.Note.manager.search(!$hidden,{ orderBy : -created },false);
+		if( request.exists("name") ) {
+			var n = new db.Note();
+			n.title = request.get("name");
+			n.created = n.modified = Date.now();
+			n.insert();
+			throw Action.Goto("/notes?id=" + n.id);
+		}
+		var n = db.Note.manager.get(request.getInt("id"));
+		if( n != null && request.exists("content") ) {
+			var content = StringTools.trim(request.get("content"));
+			if( content != n.content ) {
+				n.content = content;
+				n.modified = Date.now();
+				n.update();
+			}
+			throw Action.Goto("/notes?id=" + n.id);
+		}
+		App.context.note = n;
 	}
 
 }
