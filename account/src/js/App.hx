@@ -1,6 +1,5 @@
 package js;
-import mt.js.Tip;
-import js.SWFObject;
+import js.Tip;
 
 class App {
 

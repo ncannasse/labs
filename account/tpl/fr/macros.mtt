@@ -2,19 +2,6 @@
 
 	<macro name="confirm()" onclick="return confirm('Confirmer cette action ?')"/>
 
-	<macro name="tip(text)" onmouseover="mt.js.Tip.show(this,'::api.escapeJS(text)::','tip')" onmouseout="mt.js.Tip.hide()"/>
-
-	<macro name="swf(file,id,width,height,vars)">
-		<div id="swf_::id::" class="swf">
-		</div>
-		<script type="text/javascript">
-		var so = new js.SWFObject("/swf/::file::","::id::",::width::,::height::,8,"#F2F2F2");
-		so.addParam("AllowScriptAccess","always");
-		so.addParam("FlashVars","::vars::");
-		so.addParam("menu","false");
-		so.addParam("scale","noscale");
-		so.write("swf_::id::");
-		</script>
-	</macro>
+	<macro name="tip(text)" onmouseover="js.Tip.show(this,'::api.escapeJS(text)::','tip')" onmouseout="js.Tip.hide()"/>
 
 </macros>

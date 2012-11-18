@@ -1,6 +1,6 @@
 class Config {
 
-	static var xml = Xml.parse(neko.io.File.getContent(neko.Web.getCwd()+"../config.xml")).firstElement();
+	static var xml = Xml.parse(sys.io.File.getContent(neko.Web.getCwd()+"../config.xml")).firstElement();
 
 	public static function get( att : String, ?def ) {
 		var v = xml.get(att);

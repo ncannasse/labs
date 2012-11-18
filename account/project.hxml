@@ -2,10 +2,13 @@
 -neko www/index.n
 -main App
 -lib templo
--lib hxpdf
 -lib mtwin
+-lib format
+-lib spodadmin
 -D spod_macro
+-D haxe3
 --next
 -cp src
 js.App
 -js www/js/app.js
+-D haxe3

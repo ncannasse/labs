@@ -129,8 +129,8 @@ class App {
 	}
 
 	static function main() {
-		if( !neko.Sys.setTimeLocale(Text.get.locale1) )
-			neko.Sys.setTimeLocale(Text.get.locale2);
+		if( !Sys.setTimeLocale(Text.get.locale1) )
+			Sys.setTimeLocale(Text.get.locale2);
 		try {
 			database = initDatabase(Config.get("db"));
 		} catch( e : Dynamic ) {

@@ -6,7 +6,7 @@ class Text {
 	static var FILE = "texts.xml";
 
 	static var TEXTS = {
-		var xml = Xml.parse(neko.io.File.getContent(Config.TPL+FILE)).firstElement();
+		var xml = Xml.parse(sys.io.File.getContent(Config.TPL+FILE)).firstElement();
 		var h = new Hash();
 		for( x in xml.elements() ) {
 			var id = x.get("id");

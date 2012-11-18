@@ -1,5 +1,5 @@
 package handler;
-import hxpdf.Object;
+import format.pdf.Data;
 
 class Main extends mtwin.web.Handler<Void> {
 
@@ -9,7 +9,7 @@ class Main extends mtwin.web.Handler<Void> {
 
 	override function initialize() {
 		free("default", "main.mtt", doMain );
-		free("db", mt.db.Admin.handler );
+		free("db", spadm.Admin.handler );
 		free("upload", "upload.mtt", doUpload );
 		free("auto", doAuto );
 		free("update", doUpdate );
@@ -193,15 +193,15 @@ class Main extends mtwin.web.Handler<Void> {
 	function readCofPDF( data : String ) {
 		var list = new List();
 		var i = new haxe.io.StringInput(data);
-		var data = new hxpdf.Reader().read(i);
-		data = new hxpdf.Crypt().decrypt(data);
-		data = new hxpdf.Filter().unfilter(data);
+		var data = new format.pdf.Reader().read(i);
+		data = new format.pdf.Crypt().decrypt(data);
+		data = new format.pdf.Filter().unfilter(data);
 		var streamData = null;
 		for( x in data )
 			switch( x ) {
-			case OIndirect(_,_,v):
+			case DIndirect(_,_,v):
 				switch( v ) {
-				case OStream(data,_):
+				case DStream(data,_):
 					var data = data.toString();
 					if( !~/Fmpdf0/.match(data) )
 						continue;
@@ -233,7 +233,7 @@ class Main extends mtwin.web.Handler<Void> {
 				title += strings.shift();
 				amount = strings.shift();
 			}
-			title = neko.Utf8.encode(title);
+			title = haxe.Utf8.encode(title);
 			title = ~/ +/g.replace(title," ");
 			// skip direct pay
 			if( !~/^Achat CB /.match(title) && !~/^Retrait /.match(title) && !~/Annulation Achat CB /.match(title) )
