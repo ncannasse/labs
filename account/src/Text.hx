@@ -7,7 +7,7 @@ class Text {
 
 	static var TEXTS = {
 		var xml = Xml.parse(sys.io.File.getContent(Config.TPL+FILE)).firstElement();
-		var h = new Hash();
+		var h = new Map();
 		for( x in xml.elements() ) {
 			var id = x.get("id");
 			if( id == null )

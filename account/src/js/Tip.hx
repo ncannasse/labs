@@ -17,6 +17,10 @@ typedef WSize = {> Size,
 	scrollLeft: Int
 }
 
+class Lib {
+	public static var window : Window = cast js.Browser.window;
+	public static var document : Document = cast js.Browser.document;
+}
 
 @:expose
 @:keep
@@ -42,20 +46,20 @@ class Tip {
 	public static function show( refObj : js.HtmlDom, contentHTML : String, ?cName : String, ?pRef : Bool ){
 		init();
 		if( tooltip == null ){
-			tooltip = js.Lib.document.getElementById( tooltipId );
+			tooltip = Lib.document.getElementById( tooltipId );
 			if( tooltip == null ){
-				tooltip = js.Lib.document.createElement("div");
+				tooltip = Lib.document.createElement("div");
 				tooltip.id = tooltipId;
-				js.Lib.document.body.insertBefore(tooltip,js.Lib.document.body.firstChild);
+				Lib.document.body.insertBefore(tooltip,Lib.document.body.firstChild);
 			}
 			tooltip.style.top = "-1000px";
 			tooltip.style.position = "absolute";
 			tooltip.style.zIndex = 10;
 		}
 		if( tooltipContent == null ){
-			tooltipContent = js.Lib.document.getElementById( tooltipContentId );
+			tooltipContent = Lib.document.getElementById( tooltipContentId );
 			if( tooltipContent == null ){
-				tooltipContent = js.Lib.document.createElement("div");
+				tooltipContent = Lib.document.createElement("div");
 				tooltipContent.id = tooltipContentId;
 				tooltip.appendChild(tooltipContent);
 			}
@@ -85,7 +89,7 @@ class Tip {
 	}
 
 	public static function exclude( id : String ) {
-		var e = js.Lib.document.getElementById(id);
+		var e = Lib.document.getElementById(id);
 		if( e == null )
 			throw id+" not found";
 		if( excludeList == null )
@@ -181,7 +185,7 @@ class Tip {
 		if( lastRef == null ) return;
 		if( lastRef.parentNode == null ) return hide();
 		if( lastRef.id != null && lastRef.id != "" ){
-			if( js.Lib.document.getElementById(lastRef.id) != lastRef ) return hide();
+			if( Lib.document.getElementById(lastRef.id) != lastRef ) return hide();
 		}
 		return;
 	}
@@ -213,15 +217,15 @@ class Tip {
 		var ret = {
 			x: 0,
 			y: 0,
-			width: untyped js.Lib.window.innerWidth,
-			height: untyped js.Lib.window.innerHeight,
-			scrollLeft: js.Lib.document.body.scrollLeft + untyped js.Lib.document.documentElement.scrollLeft,
-			scrollTop: js.Lib.document.body.scrollTop + untyped js.Lib.document.documentElement.scrollTop
+			width: untyped Lib.window.innerWidth,
+			height: untyped Lib.window.innerHeight,
+			scrollLeft: Lib.document.body.scrollLeft + untyped Lib.document.documentElement.scrollLeft,
+			scrollTop: Lib.document.body.scrollTop + untyped Lib.document.documentElement.scrollTop
 		};
 
 		var isIE = untyped document.all != null && window.opera == null;
 		
-		var body = if( isIE ) untyped js.Lib.document.documentElement else js.Lib.document.body;
+		var body = if( isIE ) untyped Lib.document.documentElement else Lib.document.body;
 
 		if( ret.width == null ) ret.width = body.clientWidth;
 		if( ret.height == null ) ret.height = body.clientHeight;
@@ -233,14 +237,14 @@ class Tip {
 		try {
 		var posx = 0;
 		var posy = 0;
-		if (evt == null) evt = untyped js.Lib.window.event;
+		if (evt == null) evt = untyped Lib.window.event;
 		var e : Dynamic = cast evt;
 		if(e.pageX || e.pageY){
 			posx = e.pageX;
 			posy = e.pageY;
 		}else if(e.clientX || e.clientY){
-			posx = e.clientX + js.Lib.document.body.scrollLeft + untyped js.Lib.document.documentElement.scrollLeft;
-			posy = e.clientY + js.Lib.document.body.scrollTop + untyped js.Lib.document.documentElement.scrollTop;
+			posx = e.clientX + Lib.document.body.scrollLeft + untyped Lib.document.documentElement.scrollLeft;
+			posy = e.clientY + Lib.document.body.scrollTop + untyped Lib.document.documentElement.scrollTop;
 		}
 		mousePos = {x: posx, y: posy};
 
@@ -252,7 +256,7 @@ class Tip {
 	public static function trackMenu( elt : HtmlDom, onOut : Void -> Void ) {
 		init();
 		var ftrack = null;
-		var body = js.Lib.document.body;
+		var body = Lib.document.body;
 		ftrack = function( evt : js.Event ) {
 			if( mousePos == null ) return;
 			var size = elementSize(elt);
@@ -272,6 +276,7 @@ class Tip {
 
 	public static function init(){
 		if( initialized ) return;
+		var document = js.Browser.document;
 		untyped if( document.body != null ){
 			initialized = true;
 			document.body.onmousemove = onMouseMove;

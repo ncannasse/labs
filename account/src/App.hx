@@ -111,7 +111,7 @@ class App {
 			context = {};
 			initContext();
 			context.error = Std.string(e);
-			context.stack = haxe.Stack.toString(haxe.Stack.exceptionStack());
+			context.stack = haxe.CallStack.toString(haxe.CallStack.exceptionStack());
 			executeTemplate();
 		} catch( e : Dynamic ) {
 			neko.Lib.rethrow(e);

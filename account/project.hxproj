@@ -23,7 +23,7 @@
     <option flashStrict="False" />
     <option mainClass="App" />
     <option enabledebug="False" />
-    <option additional="-lib templo&#xA;-lib mtwin&#xA;-lib format&#xA;-lib spodadmin&#xA;-D spod_macro&#xA;-D haxe3&#xA;&#xA;--next&#xA;-cp src&#xA;js.App&#xA;-js www/js/app.js&#xA;-D haxe3" />
+    <option additional="-lib templo&#xA;-lib mtwin&#xA;-lib format&#xA;-lib spodadmin&#xA;-D spod_macro&#xA;-D haxe3&#xA;&#xA;--next&#xA;-cp src&#xA;-lib hx2compat&#xA;js.App&#xA;-js www/js/app.js&#xA;-D haxe3" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
@@ -37,6 +37,7 @@
   <hiddenPaths>
     <hidden path="project.hxml" />
     <hidden path="tpl\tmp" />
+    <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

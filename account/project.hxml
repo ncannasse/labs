@@ -9,6 +9,7 @@
 -D haxe3
 --next
 -cp src
+-lib hx2compat
 js.App
 -js www/js/app.js
 -D haxe3

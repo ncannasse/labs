@@ -61,7 +61,7 @@ class Main extends mtwin.web.Handler<Void> {
 		if( cond != null )
 			App.context.currentYear = cond.year;
 		App.context.stats = if( perYear ) db.Entry.manager.statsPerYear() else db.Entry.manager.stats(cond);
-		App.context.totalAmount = callback(db.Entry.manager.totalAmount,cond);
+		App.context.totalAmount = db.Entry.manager.totalAmount.bind(cond);
 	}
 
 	function doUpdate() {
@@ -113,7 +113,8 @@ class Main extends mtwin.web.Handler<Void> {
 		var log = new Array();
 		for( d in datas ) {
 			total += d.amount;
-			if( db.Entry.manager.count({ title : d.title, date : d.date, amount : d.amount, comment : d.comment }) > 0 )
+			var prev = db.Entry.manager.select( { title : d.title, date : d.date, amount : d.amount, comment : d.comment }, false );
+			if( prev != null && prev.batchId != batch )
 				continue;
 			var e = new db.Entry();
 			e.batchId = batch;

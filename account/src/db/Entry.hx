@@ -100,7 +100,7 @@ class EntryManager extends sys.db.Manager<Entry> {
 		return months.map(function(r) {
 			var m = r.month;
 			var results = me.execute("SELECT gid, hasSubEntries, SUM(amount) as amount FROM Entry LEFT JOIN `Group` ON gid = Group.id WHERE LEFT(date,7) = "+me.quote(m)+" GROUP BY gid").results();
-			var h = new IntHash<Float>();
+			var h = new Map<Int,Float>();
 			for( r in results ) {
 				var amount : Float = r.amount;
 				if( r.hasSubEntries )
@@ -121,7 +121,7 @@ class EntryManager extends sys.db.Manager<Entry> {
 	public function statsPerYear() {
 		return allYears().map(function(y) {
 			var results = execute("SELECT gid, hasSubEntries, SUM(amount) as amount FROM Entry LEFT JOIN `Group` ON gid = Group.id WHERE LEFT(date,4) = "+y+" GROUP BY gid").results();
-			var h = new IntHash<Float>();
+			var h = new Map<Int,Float>();
 			for( r in results ) {
 				var amount : Float = r.amount;
 				if( r.hasSubEntries )
