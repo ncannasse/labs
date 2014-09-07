@@ -22,7 +22,7 @@ class Text {
 		h;
 	}
 
-	public static var get = new AllTexts(TEXTS.get);
+	public static var get = new AllTexts(function(t) return TEXTS.get(t));
 	public static function getText(id) { return TEXTS.get(id); }
 
 	public static function format( t : String, ?params : Dynamic ) {

@@ -4,7 +4,7 @@
 -lib templo
 -lib mtwin
 -lib format
--lib spodadmin
+-lib dbadmin
 -D spod_macro
 -D haxe3
 --next

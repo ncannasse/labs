@@ -9,7 +9,7 @@ class Main extends mtwin.web.Handler<Void> {
 
 	override function initialize() {
 		free("default", "main.mtt", doMain );
-		free("db", spadm.Admin.handler );
+		free("db", sys.db.Admin.handler );
 		free("upload", "upload.mtt", doUpload );
 		free("auto", doAuto );
 		free("update", doUpdate );
@@ -245,7 +245,7 @@ class Main extends mtwin.web.Handler<Void> {
 		}
 		return list;
 	}
-	
+
 	function doNotes() {
 		App.context.notes = db.Note.manager.search(!$hidden,{ orderBy : -created },false);
 		if( request.exists("name") ) {
